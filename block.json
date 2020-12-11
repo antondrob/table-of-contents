@@ -1,10 +1,10 @@
 {
-	"name": "create-block/op-table-of-contents",
-	"title": "Op Table Of Contents",
+	"name": "create-block/table-of-contents",
+	"title": "Table Of Contents",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
-	"textdomain": "op-table-of-contents",
+	"description": "Generate Table of Contents dynamically",
+	"textdomain": "table-of-contents",
 	"supports": {
 		"html": false
 	},

@@ -182,43 +182,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-var RichText = wp.editor.RichText;
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
+ // Generate ToC structure
 
-var output = function output(headers) {
+var toc = function toc(headers) {
   var rootLevel,
       subRootLevel,
       currentLevel,
@@ -244,10 +219,10 @@ var output = function output(headers) {
       rootLevel = currentLevel;
       array.push(headers[i]);
       li = document.createElement("li");
-      elId = string_to_slug(headers[i].attributes.content);
+      elId = stringToSlug(headers[i].attributes.content);
 
       if (els.includes("li-".concat(elId))) {
-        elId = string_to_slug(headers[i].attributes.content + i);
+        elId = stringToSlug(headers[i].attributes.content + i);
       }
 
       li.id = "li-".concat(elId);
@@ -266,10 +241,10 @@ var output = function output(headers) {
     if (currentLevel <= rootLevel) {
       array.push(headers[i]);
       li = document.createElement("li");
-      elId = string_to_slug(headers[i].attributes.content);
+      elId = stringToSlug(headers[i].attributes.content);
 
       if (els.includes("li-".concat(elId))) {
-        elId = string_to_slug(headers[i].attributes.content + i);
+        elId = stringToSlug(headers[i].attributes.content + i);
       }
 
       li.id = "li-".concat(elId);
@@ -289,10 +264,10 @@ var output = function output(headers) {
         if (elem.id == prevEl) {
           ol = document.createElement("ol");
           li = document.createElement("li");
-          elId = string_to_slug(headers[i].attributes.content);
+          elId = stringToSlug(headers[i].attributes.content);
 
           if (els.includes("li-".concat(elId))) {
-            elId = string_to_slug(headers[i].attributes.content + i);
+            elId = stringToSlug(headers[i].attributes.content + i);
           }
 
           li.id = "li-".concat(elId);
@@ -311,10 +286,10 @@ var output = function output(headers) {
       root.querySelectorAll("li").forEach(function (elem) {
         if (elem.id == prevEl) {
           li = document.createElement("li");
-          elId = string_to_slug(headers[i].attributes.content);
+          elId = stringToSlug(headers[i].attributes.content);
 
           if (els.includes("li-".concat(elId))) {
-            elId = string_to_slug(headers[i].attributes.content + i);
+            elId = stringToSlug(headers[i].attributes.content + i);
           }
 
           li.id = "li-".concat(elId);
@@ -341,10 +316,10 @@ var output = function output(headers) {
       }
 
       li = document.createElement("li");
-      elId = string_to_slug(headers[i].attributes.content);
+      elId = stringToSlug(headers[i].attributes.content);
 
       if (els.includes("li-".concat(elId))) {
-        elId = string_to_slug(headers[i].attributes.content + i);
+        elId = stringToSlug(headers[i].attributes.content + i);
       }
 
       li.id = "li-".concat(elId);
@@ -367,9 +342,10 @@ var output = function output(headers) {
   var rootDiv = document.createElement('div');
   rootDiv.append(root);
   return rootDiv;
-};
+}; // Equivalent of WordPress sanitize_title()
 
-var string_to_slug = function string_to_slug(str) {
+
+var stringToSlug = function stringToSlug(str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
 
   str = str.toLowerCase(); // remove accents, swap ñ for n, etc
@@ -396,20 +372,18 @@ function Edit(props) {
       title = _props$attributes.title,
       setAttributes = props.setAttributes,
       className = props.className;
-  var allBlocks = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__["useSelect"])(function (select) {
+  var allBlocks = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["useSelect"])(function (select) {
     return select("core/block-editor").getBlocks();
   });
   var headers = [];
   allBlocks.forEach(function (block, index) {
-    if (block.name === 'core/heading' && block.attributes.isInToc) {
-      headers.push(block);
-    }
+    if (block.name === 'core/heading' && block.attributes.isInToc) headers.push(block);
   });
-  var html = output(headers).innerHTML;
+  var tocHtml = toc(headers).innerHTML;
   setAttributes({
-    content: html
+    content: tocHtml
   });
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(RichText, {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__["RichText"], {
     tagName: "h2",
     onChange: function onChange(newValue) {
       return setAttributes({
@@ -418,9 +392,9 @@ function Edit(props) {
     },
     value: title ? title : 'Table of Contents'
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "op-toc",
+    className: "toc",
     dangerouslySetInnerHTML: {
-      __html: html
+      __html: tocHtml
     }
   }));
 }
@@ -439,10 +413,10 @@ function Edit(props) {
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/filters.js":
+/*!************************!*\
+  !*** ./src/filters.js ***!
+  \************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -450,58 +424,29 @@ function Edit(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./save */ "./src/save.js");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
-var addFilter = wp.hooks.addFilter;
-
- // import './op-toc-sidebar.js';
 
 
-
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('create-block/op-table-of-contents', {
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('OP Table Of Contents', 'op-table-of-contents'),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Insert Table of Contents on your posts/pages and enhance user experience on your WordPress website.', 'op-table-of-contents'),
-  category: 'widgets',
-  keywords: ['toc'],
-  attributes: {
-    content: {
-      type: 'string',
-      source: 'html',
-      selector: '.op-toc'
-    },
-    title: {
-      type: 'string',
-      source: 'text',
-      selector: 'h2',
-      default: 'Table of Contents'
-    }
-  },
-  icon: 'editor-ul',
-  supports: {
-    html: false
-  },
-  edit: _edit__WEBPACK_IMPORTED_MODULE_5__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_6__["default"]
-});
+ // Additional attributes for core/heading block
 
 var filterBlocks = function filterBlocks(settings, name) {
-  if (name !== 'core/heading') {
-    return settings;
-  }
-
+  if (name !== 'core/heading') return settings;
   settings.attributes = Object.assign(settings.attributes, {
     isInToc: {
+      type: 'boolean',
+      default: true
+    },
+    dynamicId: {
       type: 'boolean',
       default: true
     },
@@ -516,51 +461,102 @@ var filterBlocks = function filterBlocks(settings, name) {
   return settings;
 };
 
-addFilter('blocks.registerBlockType', 'op-dev/custom-attributes', filterBlocks);
-var Fragment = wp.element.Fragment;
-var InspectorAdvancedControls = wp.blockEditor.InspectorAdvancedControls;
-var createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var _wp$components = wp.components,
-    ToggleControl = _wp$components.ToggleControl,
-    TextControl = _wp$components.TextControl;
-var withAdvancedControls = createHigherOrderComponent(function (BlockEdit) {
-  return function (props) {
-    if (props.name !== 'core/heading') {
-      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
-    }
+Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__["addFilter"])('blocks.registerBlockType', 'toc/additional-attributes', filterBlocks); // Toggle option for core/heading block: Include/Exclude from ToC
 
+var isInTocControls = Object(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__["createHigherOrderComponent"])(function (BlockEdit) {
+  return function (props) {
+    if (props.name !== 'core/heading') return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
     var attributes = props.attributes,
         setAttributes = props.setAttributes,
         isSelected = props.isSelected;
-    var isInToc = attributes.isInToc;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props), isSelected && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorAdvancedControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(ToggleControl, {
-      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Included in TOC'),
+    var isInToc = attributes.isInToc,
+        dynamicId = attributes.dynamicId;
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props), isSelected && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorAdvancedControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
+      label: "Included in TOC",
       checked: !!isInToc,
       onChange: function onChange() {
         return setAttributes({
           isInToc: !isInToc
         });
       }
+    })), isSelected && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorAdvancedControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
+      label: "Generate element ID dynamically",
+      checked: !!dynamicId,
+      onChange: function onChange() {
+        return setAttributes({
+          dynamicId: !dynamicId
+        });
+      }
     })));
   };
-}, 'withAdvancedControls');
-addFilter('editor.BlockEdit', 'op-dev/heading-id-control', withAdvancedControls);
+}, 'isInTocControls');
+Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__["addFilter"])('editor.BlockEdit', 'toc/is-in-toc-control', isInTocControls); // Conditional heading ID
 
-function coverApplyExtraClass(extraProps, blockType, attributes) {
-  if (blockType.name !== 'core/heading') {
-    return extraProps;
-  }
+var updateElementId = function updateElementId(extraProps, blockType, attributes) {
+  if (blockType.name !== 'core/heading') return extraProps;
 
-  if (typeof attributes.anchor === 'undefined' || attributes.anchor === '') {
+  if (attributes.dynamicId) {
     extraProps.id = attributes.headingID;
   } else {
     extraProps.id = attributes.anchor;
   }
 
   return extraProps;
-}
+};
 
-addFilter('blocks.getSaveContent.extraProps', 'op-dev/update-id', coverApplyExtraClass);
+Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__["addFilter"])('blocks.getSaveContent.extraProps', 'toc/update-element-id', updateElementId);
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _filters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filters.js */ "./src/filters.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./save */ "./src/save.js");
+
+
+
+
+
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('create-block/table-of-contents', {
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Table Of Contents', 'table-of-contents'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Insert Table of Contents on your posts/pages and enhance user experience on your WordPress website.', 'table-of-contents'),
+  category: 'widgets',
+  keywords: ['toc', 'table of contents'],
+  attributes: {
+    content: {
+      type: 'string',
+      source: 'html',
+      selector: '.toc'
+    },
+    title: {
+      type: 'string',
+      source: 'text',
+      selector: 'h2',
+      default: 'Table of Contents'
+    }
+  },
+  icon: 'editor-ul',
+  supports: {
+    html: false
+  },
+  edit: _edit__WEBPACK_IMPORTED_MODULE_4__["default"],
+  save: _save__WEBPACK_IMPORTED_MODULE_5__["default"]
+});
 
 /***/ }),
 
@@ -576,29 +572,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Save; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
 
 function Save(props) {
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, props.attributes.title), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "op-toc",
+    className: "toc",
     dangerouslySetInnerHTML: {
       __html: props.attributes.content
     }
@@ -629,6 +606,28 @@ function Save(props) {
 
 /***/ }),
 
+/***/ "@wordpress/components":
+/*!*********************************************!*\
+  !*** external {"this":["wp","components"]} ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["components"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/compose":
+/*!******************************************!*\
+  !*** external {"this":["wp","compose"]} ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["compose"]; }());
+
+/***/ }),
+
 /***/ "@wordpress/data":
 /*!***************************************!*\
   !*** external {"this":["wp","data"]} ***!
@@ -640,6 +639,17 @@ function Save(props) {
 
 /***/ }),
 
+/***/ "@wordpress/editor":
+/*!*****************************************!*\
+  !*** external {"this":["wp","editor"]} ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["editor"]; }());
+
+/***/ }),
+
 /***/ "@wordpress/element":
 /*!******************************************!*\
   !*** external {"this":["wp","element"]} ***!
@@ -648,6 +658,17 @@ function Save(props) {
 /***/ (function(module, exports) {
 
 (function() { module.exports = this["wp"]["element"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/hooks":
+/*!****************************************!*\
+  !*** external {"this":["wp","hooks"]} ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["hooks"]; }());
 
 /***/ }),
 

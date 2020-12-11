@@ -1,33 +1,9 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import {__} from '@wordpress/i18n';
-
-const {RichText} = wp.editor;
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import {RichText} from '@wordpress/editor';
+import {useSelect} from '@wordpress/data';
 import './editor.scss';
-import {useSelect} from "@wordpress/data";
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
-
-const output = (headers) => {
+// Generate ToC structure
+const toc = (headers) => {
 	let rootLevel, subRootLevel, currentLevel, prevLevel, nextLevel, array = [], lastElement;
 	let root = document.createElement('ol'), ol, li, a, childLi, childOl, els = [], prevEl, elId;
 	for (let i = 0; i < headers.length; i++) {
@@ -37,9 +13,9 @@ const output = (headers) => {
 			rootLevel = currentLevel;
 			array.push(headers[i]);
 			li = document.createElement("li");
-			elId = string_to_slug(headers[i].attributes.content);
+			elId = stringToSlug(headers[i].attributes.content);
 			if (els.includes(`li-${elId}`)) {
-				elId = string_to_slug(headers[i].attributes.content + i);
+				elId = stringToSlug(headers[i].attributes.content + i);
 			}
 			li.id = `li-${elId}`;
 			els.push(`li-${elId}`);
@@ -55,9 +31,9 @@ const output = (headers) => {
 		if (currentLevel <= rootLevel) {
 			array.push(headers[i]);
 			li = document.createElement("li");
-			elId = string_to_slug(headers[i].attributes.content);
+			elId = stringToSlug(headers[i].attributes.content);
 			if (els.includes(`li-${elId}`)) {
-				elId = string_to_slug(headers[i].attributes.content + i);
+				elId = stringToSlug(headers[i].attributes.content + i);
 			}
 			li.id = `li-${elId}`;
 			els.push(`li-${elId}`);
@@ -75,9 +51,9 @@ const output = (headers) => {
 				if (elem.id == prevEl) {
 					ol = document.createElement("ol");
 					li = document.createElement("li");
-					elId = string_to_slug(headers[i].attributes.content);
+					elId = stringToSlug(headers[i].attributes.content);
 					if (els.includes(`li-${elId}`)) {
-						elId = string_to_slug(headers[i].attributes.content + i);
+						elId = stringToSlug(headers[i].attributes.content + i);
 					}
 					li.id = `li-${elId}`;
 					els.push(`li-${elId}`);
@@ -95,9 +71,9 @@ const output = (headers) => {
 			root.querySelectorAll("li").forEach((elem) => {
 				if (elem.id == prevEl) {
 					li = document.createElement("li");
-					elId = string_to_slug(headers[i].attributes.content);
+					elId = stringToSlug(headers[i].attributes.content);
 					if (els.includes(`li-${elId}`)) {
-						elId = string_to_slug(headers[i].attributes.content + i);
+						elId = stringToSlug(headers[i].attributes.content + i);
 					}
 					li.id = `li-${elId}`;
 					els.push(`li-${elId}`);
@@ -121,9 +97,9 @@ const output = (headers) => {
 				ol = li.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
 			}
 			li = document.createElement("li");
-			elId = string_to_slug(headers[i].attributes.content);
+			elId = stringToSlug(headers[i].attributes.content);
 			if (els.includes(`li-${elId}`)) {
-				elId = string_to_slug(headers[i].attributes.content + i);
+				elId = stringToSlug(headers[i].attributes.content + i);
 			}
 			li.id = `li-${elId}`;
 			els.push(`li-${elId}`);
@@ -140,7 +116,8 @@ const output = (headers) => {
 	return rootDiv;
 }
 
-const string_to_slug = function (str) {
+// Equivalent of WordPress sanitize_title()
+const stringToSlug = (str) => {
 	str = str.replace(/^\s+|\s+$/g, ''); // trim
 	str = str.toLowerCase();
 
@@ -160,19 +137,26 @@ const string_to_slug = function (str) {
 
 	return str;
 }
+
 export default function Edit(props) {
-	const {attributes: {content, title}, setAttributes, className} = props;
+	const {
+		attributes: {content, title},
+		setAttributes,
+		className
+	} = props;
+
 	const allBlocks = useSelect((select) => select("core/block-editor").getBlocks());
 	let headers = [];
 	allBlocks.forEach((block, index) => {
-		if (block.name === 'core/heading' && block.attributes.isInToc) {
+		if (block.name === 'core/heading' && block.attributes.isInToc)
 			headers.push(block);
-		}
 	});
-	const html = output(headers).innerHTML;
+
+	const tocHtml = toc(headers).innerHTML;
 	setAttributes({
-		content: html
+		content: tocHtml
 	});
+
 	return (
 		<div>
 			<RichText
@@ -180,8 +164,7 @@ export default function Edit(props) {
 				onChange={(newValue) => setAttributes({title: newValue})}
 				value={title ? title : 'Table of Contents'}
 			/>
-			<div className="op-toc" dangerouslySetInnerHTML={{__html: html}}/>
+			<div className="toc" dangerouslySetInnerHTML={{__html: tocHtml}}/>
 		</div>
-
 	);
 };
